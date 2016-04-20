@@ -1,0 +1,23 @@
+{
+  "name": "uri-stats",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build-data": "npm run fetch-data && node lto.js ./uri-users > data.json",
+    "build-js": "browserify browser/main.js -o bundle.js",
+    "fetch-data": "node index.js",
+    "start": "npm run build-js && http-server .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Manuel Pineda <manuel.felipe.pineda@gmail.com> (http://github.com/pin3da)",
+  "license": "ISC",
+  "dependencies": {
+    "fetch-user-uri": "^1.0.0",
+    "http-server": "^0.9.0",
+    "level": "^1.4.0"
+  },
+  "devDependencies": {
+    "browserify": "^13.0.0"
+  }
+}
