@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build-data": "npm run fetch-data && node lto.js ./uri-users > data.json",
-    "build-js": "browserify browser/main.js -o bundle.js",
+    "build-js": "browserify browser/main.js -o assets/js/bundle.js",
     "fetch-data": "node index.js",
     "start": "npm run build-js && http-server .",
     "test": "echo \"Error: no test specified\" && exit 1"

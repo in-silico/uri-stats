@@ -1,0 +1,36 @@
+/* Custom Stylesheet */
+/**
+ * Made By MaterializeCSS.com
+ */
+ body {
+   display: flex;
+   min-height: 100vh;
+   flex-direction: column;
+ }
+
+ main {
+   flex: 1 0 auto;
+ }
+
+
+td, th {
+  padding: 6px 8px;
+}
+
+tr:nth-child(even) {background: #e2e6e9}
+tr:nth-child(odd) {background: #FFF}
+
+a {
+  outline: none;
+}
+
+.score tbody > tr:nth-child(n):nth-child(odd):nth-child(-n+9) {background: #69f0ae}
+.score tbody > tr:nth-child(n+1):nth-child(even):nth-child(-n+9) {background: #00e676}
+
+.material-icons {
+  font-size: 18px;
+}
+
+.light a {
+  color : black;
+}
