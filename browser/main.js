@@ -2,7 +2,7 @@ var sagent = require('superagent');
 var d3 = require('d3');
 
 function d3fy (person, mmax) {
-  var margin = {top: 20, right: 20, bottom: 30, left: 40},
+  var margin = {top: 40, right: 20, bottom: 30, left: 40},
   width = 400 - margin.left - margin.right,
   height = 300 - margin.top - margin.bottom;
 
@@ -29,6 +29,21 @@ function d3fy (person, mmax) {
   var data = person.data;
   x.domain(data.map(function(d) { return d.timeStamp; }));
   y.domain([0, mmax]);
+
+  var name = 'nn';
+  for (var i = 0; i < data.length; ++i) {
+    if ('name' in data[i]) {
+      name = data[i].name;
+      break;
+    }
+  }
+
+  svg.append("text")
+        .attr("x", (width / 2))
+        .attr("y", -10)
+        .attr("text-anchor", "middle")
+        .style("font-size", "16px")
+        .text(name);
 
   svg.append("g")
     .attr("class", "x axis")
