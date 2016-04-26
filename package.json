@@ -6,18 +6,22 @@
   "scripts": {
     "build-data": "npm run fetch-data && node lto.js ./uri-users > data.json",
     "build-js": "browserify browser/main.js -o assets/js/bundle.js",
+    "watch-js": "watchify browser/main.js -o assets/js/bundle.js -dv",
     "fetch-data": "node index.js",
     "start": "npm run build-js && http-server .",
+    "start-dev": "npm run watch-js & http-server .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Manuel Pineda <manuel.felipe.pineda@gmail.com> (http://github.com/pin3da)",
   "license": "ISC",
   "dependencies": {
+    "d3": "^3.5.16",
     "fetch-user-uri": "^1.0.0",
     "http-server": "^0.9.0",
     "level": "^1.4.0"
   },
   "devDependencies": {
-    "browserify": "^13.0.0"
+    "browserify": "^13.0.0",
+    "watchify": "^3.7.0"
   }
 }
