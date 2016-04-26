@@ -19,8 +19,9 @@ function d3fy (person, mmax) {
   var yAxis = d3.svg.axis()
     .scale(y)
     .orient("left");
-
-  var svg = d3.select('main').append("svg")
+  var tar = document.querySelector("#graphics");
+  tar.innerHTML = "";
+  var svg = d3.select('#graphics').append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
     .append("g")
@@ -80,12 +81,29 @@ function displayData (err, data) {
   for (var i = 0; i < data.length; ++i) {
     var person = data[i];
     person.data = JSON.parse(person.data);
-    for (var j = 0; j < person.data.length; ++j)
+
+    var localMax = 0;
+    for (var j = 0; j < person.data.length; ++j){
       mmax = Math.max(mmax, person.data[j].Solved);
-  }
-  for (var i = 0; i < data.length; ++i) {
-    var person = data[i];
-    d3fy(person, mmax);
+      name = person.data[j].name;    
+      localMax = Math.max(localMax, person.data[j].Solved);
+    }
+
+    var cur = document.createElement('li');
+    cur.id = person.id;
+    cur.addEventListener("click",
+      function(event){
+        var idPerson = event.target.id;
+        for(var k = 0; k < data.length; k++){
+          if(data[k].id === idPerson){
+            personToGraph = data[k];
+            break;
+          }
+        }
+        d3fy(personToGraph, 300);
+      });
+    cur.innerHTML = name + ' (' + localMax +')';
+    tar.appendChild(cur);
   }
 }
 
