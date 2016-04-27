@@ -125,7 +125,7 @@ function displayData (err, data) {
             break;
           }
         }
-        d3fy(personToGraph, 300);
+        d3fy(personToGraph, mmax);
       });
     cur.innerHTML = nicks[i].name;
 
