@@ -11,6 +11,7 @@
  main {
    flex: 1 0 auto;
  }
+ 
 
 
 td, th {
@@ -57,6 +58,36 @@ a {
 }
 
 .x.axis path {
-  display: none;
+  /*display: none;*/
 }
 
+#profiles{
+  float: left;
+  margin-right: 5%;
+  width: 20%;
+}
+
+#profiles li{
+  font-weight: bold;
+  text-transform: capitalize;
+  list-style: none; 
+}
+
+#profiles li:hover{
+  font-weight: bold;
+  text-transform: capitalize;
+  color: rgba(0, 0, 0, 0.40);
+}
+
+
+#profiles span{
+  font-weight: bold;
+  float: right;
+  color: red;
+}
+
+
+#graphics{
+  float: left;
+  width: 60%;
+}
