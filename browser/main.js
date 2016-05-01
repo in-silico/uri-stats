@@ -87,16 +87,21 @@ function displayData (err, data) {
     person.data = JSON.parse(person.data);
 
     var localMax = 0;
-
+    var raiting = [];
     for (var j = 0; j < person.data.length; ++j){
       mmax = Math.max(mmax, person.data[j].Solved);
-      name = person.data[j].name;    
+      name = person.data[j].name;
+      raiting.push(parseInt(person.data[j].Solved));
       localMax = Math.max(localMax, person.data[j].Solved);
     }
-    
     name = name.slice(0, 15);
+    var stat = 0;
+    var lenR = raiting.length;
+    if(lenR >= 2){
+      stat = raiting[lenR - 1] - raiting[lenR - 2];
+    }
     
-    nicks.push({'name': name, 'solved' : localMax, 'id' : person.id});
+    nicks.push({'name': name, 'solved' : localMax, 'id' : person.id, 'st': stat});
   }
   
   nicks.sort(function (a, b) {
@@ -110,10 +115,10 @@ function displayData (err, data) {
     
   });
 
-
   for (var i = 0; i < nicks.length; i++) {
     var cur = document.createElement('li');
     var spa = document.createElement('span');
+    var progress = document.createElement('span');
     
     cur.id = nicks[i].id;
     cur.addEventListener("click",
@@ -130,6 +135,9 @@ function displayData (err, data) {
     cur.innerHTML = nicks[i].name;
 
     spa.innerHTML = ' [' + nicks[i].solved +']';
+    progress.innerHTML = ' [' + nicks[i].st + ']';
+    progress.title = nicks[i].st + ' solved problem(s) the last week';
+    cur.appendChild(progress);
     cur.appendChild(spa);
 
     tar.appendChild(cur);
