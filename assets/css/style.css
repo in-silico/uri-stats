@@ -11,7 +11,7 @@
  main {
    flex: 1 0 auto;
  }
- 
+
 
 
 td, th {
@@ -61,33 +61,26 @@ a {
   /*display: none;*/
 }
 
-#profiles{
+#profiles {
   float: left;
   margin-right: 5%;
-  width: 20%;
 }
 
-#profiles li{
+#profiles li {
   font-weight: bold;
   text-transform: capitalize;
-  list-style: none; 
+  list-style: none;
+  text-align: right;
+  text-justify: inter-word;
 }
 
-#profiles li:hover{
+#profiles li:hover {
   font-weight: bold;
   text-transform: capitalize;
   color: rgba(0, 0, 0, 0.40);
 }
 
-
-#profiles span{
+#profiles span {
   font-weight: bold;
-  float: right;
-  color: red;
-}
-
-
-#graphics{
-  float: left;
-  width: 60%;
+  color: rgb(251, 140, 0);
 }
