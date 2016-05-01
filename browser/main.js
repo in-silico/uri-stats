@@ -4,8 +4,8 @@ var dnt = require('date-and-time');
 
 function d3fy (person, mmax) {
   var margin = {top: 40, right: 20, bottom: 30, left: 40},
-  width = 400 - margin.left - margin.right,
-  height = 300 - margin.top - margin.bottom;
+    width = 400 - margin.left - margin.right,
+    height = 300 - margin.top - margin.bottom;
 
   var x = d3.scale.ordinal()
     .rangeRoundBands([0, width], .1);
@@ -15,21 +15,21 @@ function d3fy (person, mmax) {
 
   var xAxis = d3.svg.axis()
     .scale(x)
-    .orient("bottom");
+    .orient('bottom');
 
   var yAxis = d3.svg.axis()
     .scale(y)
-    .orient("left");
-  var tar = document.querySelector("#graphics");
-  tar.innerHTML = "";
-  var svg = d3.select('#graphics').append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-    .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    .orient('left');
+  var tar = document.querySelector('#graphics');
+  tar.innerHTML = '';
+  var svg = d3.select('#graphics').append('svg')
+    .attr('width', width + margin.left + margin.right)
+    .attr('height', height + margin.top + margin.bottom)
+    .append('g')
+    .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
   var data = person.data;
-  x.domain(data.map(function(d) { return dnt.format(new Date(d.timeStamp), 'MM/DD'); }));
+  x.domain(data.map(function (d) { return dnt.format(new Date(d.timeStamp), 'MM/DD'); }));
   y.domain([0, mmax]);
 
   var name = 'nn';
@@ -40,40 +40,40 @@ function d3fy (person, mmax) {
     }
   }
 
-  svg.append("text")
-        .attr("x", (width / 2))
-        .attr("y", -10)
-        .attr("text-anchor", "middle")
-        .style("font-size", "16px")
-        .text(name);
+  svg.append('text')
+    .attr('x', (width / 2))
+    .attr('y', -10)
+    .attr('text-anchor', 'middle')
+    .style('font-size', '16px')
+    .text(name);
 
-  svg.append("g")
-    .attr("class", "x axis")
-    .attr("transform", "translate(0," + height + ")")
+  svg.append('g')
+    .attr('class', 'x axis')
+    .attr('transform', 'translate(0,' + height + ')')
     .call(xAxis);
 
-  svg.append("g")
-    .attr("class", "y axis")
+  svg.append('g')
+    .attr('class', 'y axis')
     .call(yAxis)
-    .append("text")
-    .attr("transform", "rotate(-90)")
-    .attr("y", 6)
-    .attr("dy", "5px")
-    .style("text-anchor", "end")
-    .text("solved");
+    .append('text')
+    .attr('transform', 'rotate(-90)')
+    .attr('y', 6)
+    .attr('dy', '5px')
+    .style('text-anchor', 'end')
+    .text('solved');
 
-  svg.selectAll(".bar")
+  svg.selectAll('.bar')
     .data(data)
-    .enter().append("rect")
-    .attr("class", "bar")
-    .attr("x", function(d) { return x(dnt.format(new Date(d.timeStamp), 'MM/DD')); })
-    .attr("width", x.rangeBand())
-    .attr("y", function(d) { return y(d.Solved); })
-    .attr("height", function(d) { return height - y(d.Solved); });
+    .enter().append('rect')
+    .attr('class', 'bar')
+    .attr('x', function (d) { return x(dnt.format(new Date(d.timeStamp), 'MM/DD')); })
+    .attr('width', x.rangeBand())
+    .attr('y', function (d) { return y(d.Solved); })
+    .attr('height', function (d) { return height - y(d.Solved); });
 }
 
 function displayData (err, data) {
-  var tar = document.querySelector("#profiles");
+  var tar = document.querySelector('#profiles');
   if (err) {
     return tar.innerHTML = 'There is a problem with the data';
   }
@@ -88,7 +88,7 @@ function displayData (err, data) {
 
     var localMax = 0;
     var raiting = [];
-    for (var j = 0; j < person.data.length; ++j){
+    for (var j = 0; j < person.data.length; ++j) {
       mmax = Math.max(mmax, person.data[j].Solved);
       name = person.data[j].name;
       raiting.push(parseInt(person.data[j].Solved));
@@ -97,13 +97,13 @@ function displayData (err, data) {
     name = name.slice(0, 15);
     var stat = 0;
     var lenR = raiting.length;
-    if(lenR >= 2){
+    if (lenR >= 2) {
       stat = raiting[lenR - 1] - raiting[lenR - 2];
     }
-    
-    nicks.push({'name': name, 'solved' : localMax, 'id' : person.id, 'st': stat});
+
+    nicks.push({'name': name, 'solved': localMax, 'id': person.id, 'st': stat});
   }
-  
+
   nicks.sort(function (a, b) {
     if (a.solved > b.solved) {
       return -1;
@@ -112,20 +112,19 @@ function displayData (err, data) {
       return 1;
     }
     return 0;
-    
   });
 
   for (var i = 0; i < nicks.length; i++) {
     var cur = document.createElement('li');
     var spa = document.createElement('span');
     var progress = document.createElement('span');
-    
+
     cur.id = nicks[i].id;
-    cur.addEventListener("click",
-      function(event){
+    cur.addEventListener('click',
+      function (event) {
         var idPerson = event.target.id;
-        for(var k = 0; k < data.length; k++){
-          if(data[k].id === idPerson){
+        for (var k = 0; k < data.length; k++) {
+          if (data[k].id === idPerson) {
             personToGraph = data[k];
             break;
           }
@@ -134,7 +133,7 @@ function displayData (err, data) {
       });
     cur.innerHTML = nicks[i].name;
 
-    spa.innerHTML = ' [' + nicks[i].solved +']';
+    spa.innerHTML = ' [' + nicks[i].solved + ']';
     progress.innerHTML = ' [' + nicks[i].st + ']';
     progress.title = nicks[i].st + ' solved problem(s) the last week';
     cur.appendChild(progress);
@@ -144,7 +143,7 @@ function displayData (err, data) {
   }
 }
 
-function start() {
+function start () {
   sagent
     .get('./data.json')
     .set('Accept', 'application/json')
