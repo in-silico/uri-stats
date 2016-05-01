@@ -3,9 +3,18 @@ var d3 = require('d3');
 var dnt = require('date-and-time');
 
 function d3fy (person, mmax) {
-  var margin = {top: 40, right: 20, bottom: 30, left: 40},
-    width = 400 - margin.left - margin.right,
-    height = 300 - margin.top - margin.bottom;
+  if (!person) return;
+  var height = 400;
+  if (screen.height <= 400) {
+    height = 220;
+  } else if (screen.height <= 500) {
+    height = 250;
+  } else if (screen.height <= 650) {
+    height = 320;
+  }
+  var margin = {top: 40, right: 10, bottom: 30, left: 20},
+    width = Math.min(screen.width - 100, 500) - margin.left - margin.right;
+  height = height - margin.top - margin.bottom;
 
   var x = d3.scale.ordinal()
     .rangeRoundBands([0, width], .1);
@@ -70,6 +79,8 @@ function d3fy (person, mmax) {
     .attr('width', x.rangeBand())
     .attr('y', function (d) { return y(d.Solved); })
     .attr('height', function (d) { return height - y(d.Solved); });
+
+  $('#modal-graphics').openModal();
 }
 
 function displayData (err, data) {
@@ -120,24 +131,27 @@ function displayData (err, data) {
     var progress = document.createElement('span');
 
     cur.id = nicks[i].id;
-    cur.addEventListener('click',
-      function (event) {
-        var idPerson = event.target.id;
-        for (var k = 0; k < data.length; k++) {
-          if (data[k].id === idPerson) {
-            personToGraph = data[k];
-            break;
-          }
-        }
-        d3fy(personToGraph, mmax);
-      });
     cur.innerHTML = nicks[i].name;
-
     spa.innerHTML = ' [' + nicks[i].solved + ']';
     progress.innerHTML = ' [' + nicks[i].st + ']';
-    progress.title = nicks[i].st + ' solved problem(s) the last week';
+    cur.title = nicks[i].st + ' solved problem(s) the last week';
     cur.appendChild(progress);
     cur.appendChild(spa);
+
+    cur.addEventListener('click', function (event) {
+      var idPerson = event.target.id;
+      if (!idPerson) {
+        idPerson = event.target.parentNode.id;
+      }
+      var personToGraph = null;
+      for (var k = 0; k < data.length; k++) {
+        if (data[k].id === idPerson) {
+          personToGraph = data[k];
+          break;
+        }
+      }
+      d3fy(personToGraph, mmax);
+    });
 
     tar.appendChild(cur);
   }
