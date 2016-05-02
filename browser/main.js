@@ -12,7 +12,7 @@ function d3fy (person, mmax) {
   } else if (screen.height <= 650) {
     height = 320;
   }
-  var margin = {top: 40, right: 10, bottom: 30, left: 20},
+  var margin = {top: 40, right: 10, bottom: 30, left: 30},
     width = Math.min(screen.width - 100, 500) - margin.left - margin.right;
   height = height - margin.top - margin.bottom;
 
@@ -99,6 +99,7 @@ function displayData (err, data) {
 
     var localMax = 0;
     var raiting = [];
+    var name = null;
     for (var j = 0; j < person.data.length; ++j) {
       mmax = Math.max(mmax, person.data[j].Solved);
       name = person.data[j].name;
