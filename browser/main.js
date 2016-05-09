@@ -84,6 +84,7 @@ function d3fy (person, mmax) {
 }
 
 function displayData (err, data) {
+  var urlProfile = 'https://www.urionlinejudge.com.br/judge/en/profile/';
   var tar = document.querySelector('#profiles');
 
   if (err) {
@@ -129,17 +130,16 @@ function displayData (err, data) {
 
   for (var i = 0; i < nicks.length; i++) {
     var cur = document.createElement('div');
-    var spa = document.createElement('span');
-    var progress = document.createElement('span');
+    var buttonGraphics = document.createElement('button');
 
     cur.id = nicks[i].id;
     cur.className = 'floating-box';
-    cur.innerHTML = nicks[i].name + '<br />';
+    cur.innerHTML = '<a href="https://www.urionlinejudge.com.br/judge/en/profile/' + nicks[i].id + '" target=_blank>' +nicks[i].name + '</a><br />';
     cur.innerHTML += 'Problems Solved: ' + ' <span>[' + nicks[i].solved + ']<span><br />';
     cur.innerHTML += 'Last Week: ' + ' <span>[' + nicks[i].st + ']<span>';
 
-
-    cur.addEventListener('click', function (event) {
+    buttonGraphics.innerHTML = 'view graph';
+    buttonGraphics.addEventListener('click', function (event) {
       var idPerson = event.target.id;
       if (!idPerson) {
         idPerson = event.target.parentNode.id;
@@ -153,7 +153,7 @@ function displayData (err, data) {
       }
       d3fy(personToGraph, mmax);
     });
-
+    cur.appendChild(buttonGraphics);
     tar.appendChild(cur);
   }
 }
