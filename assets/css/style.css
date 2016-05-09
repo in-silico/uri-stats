@@ -74,19 +74,13 @@ a {
   text-justify: inter-word;
 }
 
-#profiles div:hover {
-  font-weight: bold;
-  text-transform: capitalize;
-  background-color: #eeffff;
 
-}
 
 #profiles span {
   font-weight: bold;
   text-align: right;
   color: rgb(251, 140, 0);
 }
-
 
 .floating-box {
     display: inline-block;
