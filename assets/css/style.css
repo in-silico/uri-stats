@@ -66,21 +66,38 @@ a {
   margin-right: 5%;
 }
 
-#profiles li {
+#profiles{
   font-weight: bold;
   text-transform: capitalize;
   list-style: none;
-  text-align: right;
+  text-align: left;
   text-justify: inter-word;
 }
 
-#profiles li:hover {
+#profiles div:hover {
   font-weight: bold;
   text-transform: capitalize;
-  color: rgba(0, 0, 0, 0.40);
+  background-color: #eeffff;
+
 }
 
 #profiles span {
   font-weight: bold;
+  text-align: right;
   color: rgb(251, 140, 0);
+}
+
+
+.floating-box {
+    display: inline-block;
+    width: 200px;
+    height: 80px;
+    margin: 10px;
+    padding: 5px;
+    border: 1px solid rgb(251, 140, 0);  
+    border-radius: 5px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }

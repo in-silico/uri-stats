@@ -85,6 +85,7 @@ function d3fy (person, mmax) {
 
 function displayData (err, data) {
   var tar = document.querySelector('#profiles');
+
   if (err) {
     return tar.innerHTML = 'There is a problem with the data';
   }
@@ -127,17 +128,16 @@ function displayData (err, data) {
   });
 
   for (var i = 0; i < nicks.length; i++) {
-    var cur = document.createElement('li');
+    var cur = document.createElement('div');
     var spa = document.createElement('span');
     var progress = document.createElement('span');
 
     cur.id = nicks[i].id;
-    cur.innerHTML = nicks[i].name;
-    spa.innerHTML = ' [' + nicks[i].solved + ']';
-    progress.innerHTML = ' [' + nicks[i].st + ']';
-    cur.title = nicks[i].st + ' solved problem(s) the last week';
-    cur.appendChild(progress);
-    cur.appendChild(spa);
+    cur.className = 'floating-box';
+    cur.innerHTML = nicks[i].name + '<br />';
+    cur.innerHTML += 'Problems Solved: ' + ' <span>[' + nicks[i].solved + ']<span><br />';
+    cur.innerHTML += 'Last Week: ' + ' <span>[' + nicks[i].st + ']<span>';
+
 
     cur.addEventListener('click', function (event) {
       var idPerson = event.target.id;
