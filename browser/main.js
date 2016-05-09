@@ -130,16 +130,17 @@ function displayData (err, data) {
 
   for (var i = 0; i < nicks.length; i++) {
     var cur = document.createElement('div');
-    var buttonGraphics = document.createElement('button');
-
+    var divInfo = document.createElement('div');
+    var divName = document.createElement('div');
+    
     cur.id = nicks[i].id;
     cur.className = 'floating-box';
-    cur.innerHTML = '<a href="https://www.urionlinejudge.com.br/judge/en/profile/' + nicks[i].id + '" target=_blank>' +nicks[i].name + '</a><br />';
-    cur.innerHTML += 'Problems Solved: ' + ' <span>[' + nicks[i].solved + ']<span><br />';
-    cur.innerHTML += 'Last Week: ' + ' <span>[' + nicks[i].st + ']<span>';
+    divName.innerHTML = '<a href="https://www.urionlinejudge.com.br/judge/en/profile/' + nicks[i].id + '" target=_blank>' +nicks[i].name + '</a><br />';
+    divInfo.innerHTML = 'Problems Solved: ' + ' <span>[' + nicks[i].solved + ']<span><br />';
+    divInfo.innerHTML += 'Last Week: ' + ' <span>[' + nicks[i].st + ']<span>';
 
-    buttonGraphics.innerHTML = 'view graph';
-    buttonGraphics.addEventListener('click', function (event) {
+    
+    divInfo.addEventListener('click', function (event) {
       var idPerson = event.target.id;
       if (!idPerson) {
         idPerson = event.target.parentNode.id;
@@ -153,7 +154,8 @@ function displayData (err, data) {
       }
       d3fy(personToGraph, mmax);
     });
-    cur.appendChild(buttonGraphics);
+    cur.appendChild(divName);
+    cur.appendChild(divInfo);
     tar.appendChild(cur);
   }
 }
