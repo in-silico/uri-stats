@@ -1,7 +1,49 @@
 var sagent = require('superagent');
 var d3 = require('d3');
 var dnt = require('date-and-time');
+var c3 = require('c3');
 
+function c3G(data) {
+
+  var height = 300;
+  var width = 700;
+  if (screen.height <= 400) {
+    height = 220;
+    width = 200;
+  } else if (screen.height <= 500) {
+    height = 250;
+    width = 230;
+  } else if (screen.height <= 650) {
+    height = 320;
+    width = 280;
+  }
+
+  problems = ["x"];
+  delta = ["delta", 0];
+  for(var i = 0; i < data.data.length; i++) {
+    if(data.data[i].name != null) problems[0] = data.data[i].name;
+    problems.push(parseInt(data.data[i].Solved));
+    if (i)
+      delta.push(problems[i + 1] - problems[i]);
+  }
+  
+  var chart = c3.generate({
+    bindto: '#graphics',
+    data: {
+      columns: [
+        problems,
+        delta
+      ],
+      type: 'spline'
+      
+    },
+    
+  });
+  
+  chart.resize({height: height, width: width});
+  $('#modal-graphics').openModal();
+}
+/*
 function d3fy (person, mmax) {
   if (!person) return;
   var height = 400;
@@ -82,6 +124,7 @@ function d3fy (person, mmax) {
 
   $('#modal-graphics').openModal();
 }
+*/
 
 function displayData (err, data) {
   var urlProfile = 'https://www.urionlinejudge.com.br/judge/en/profile/';
@@ -135,7 +178,7 @@ function displayData (err, data) {
     
     cur.id = nicks[i].id;
     cur.className = 'floating-box';
-    divName.innerHTML = '<a href="https://www.urionlinejudge.com.br/judge/en/profile/' + nicks[i].id + '" target=_blank>' +nicks[i].name + '</a><br />';
+    divName.innerHTML = '<a href="' + urlProfile + nicks[i].id + '" target=_blank>' +nicks[i].name + '</a><br />';
     divInfo.innerHTML = 'Problems Solved: ' + ' <span>[' + nicks[i].solved + ']<span><br />';
     divInfo.innerHTML += 'Last Week: ' + ' <span>[' + nicks[i].st + ']<span>';
 
@@ -152,12 +195,14 @@ function displayData (err, data) {
           break;
         }
       }
-      d3fy(personToGraph, mmax);
+      //d3fy(personToGraph, mmax);
+      c3G(personToGraph);
     });
     cur.appendChild(divName);
     cur.appendChild(divInfo);
     tar.appendChild(cur);
   }
+  //c3G();
 }
 
 function start () {
