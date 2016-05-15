@@ -18,113 +18,46 @@ function c3G(data) {
     width = 280;
   }
 
-  problems = ["x"];
+  problems = ["name"];
   delta = ["delta", 0];
+  dates = ["date"];
+  
   for(var i = 0; i < data.data.length; i++) {
     if(data.data[i].name != null) problems[0] = data.data[i].name;
     problems.push(parseInt(data.data[i].Solved));
     if (i)
       delta.push(problems[i + 1] - problems[i]);
+    dates.push(dnt.format(new Date(data.data[i].timeStamp), 'MM-DD'));
   }
-  
+  console.log(dates);
   var chart = c3.generate({
     bindto: '#graphics',
     data: {
+      x: 'date',
+      xFormat: '%m-%d',
+      
       columns: [
+        dates,
         problems,
         delta
       ],
       type: 'spline'
-      
     },
-    
+
+    axis : {
+      x : {
+        type : 'timeseries',
+        tick: {
+          format: '%m-%d'
+        }
+      }
+    }
+
   });
-  
+
   chart.resize({height: height, width: width});
   $('#modal-graphics').openModal();
 }
-/*
-function d3fy (person, mmax) {
-  if (!person) return;
-  var height = 400;
-  if (screen.height <= 400) {
-    height = 220;
-  } else if (screen.height <= 500) {
-    height = 250;
-  } else if (screen.height <= 650) {
-    height = 320;
-  }
-  var margin = {top: 40, right: 10, bottom: 30, left: 30},
-    width = Math.min(screen.width - 100, 500) - margin.left - margin.right;
-  height = height - margin.top - margin.bottom;
-
-  var x = d3.scale.ordinal()
-    .rangeRoundBands([0, width], .1);
-
-  var y = d3.scale.linear()
-    .range([height, 0]);
-
-  var xAxis = d3.svg.axis()
-    .scale(x)
-    .orient('bottom');
-
-  var yAxis = d3.svg.axis()
-    .scale(y)
-    .orient('left');
-  var tar = document.querySelector('#graphics');
-  tar.innerHTML = '';
-  var svg = d3.select('#graphics').append('svg')
-    .attr('width', width + margin.left + margin.right)
-    .attr('height', height + margin.top + margin.bottom)
-    .append('g')
-    .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
-
-  var data = person.data;
-  x.domain(data.map(function (d) { return dnt.format(new Date(d.timeStamp), 'MM/DD'); }));
-  y.domain([0, mmax]);
-
-  var name = 'nn';
-  for (var i = 0; i < data.length; ++i) {
-    if ('name' in data[i]) {
-      name = data[i].name;
-      break;
-    }
-  }
-
-  svg.append('text')
-    .attr('x', (width / 2))
-    .attr('y', -10)
-    .attr('text-anchor', 'middle')
-    .style('font-size', '16px')
-    .text(name);
-
-  svg.append('g')
-    .attr('class', 'x axis')
-    .attr('transform', 'translate(0,' + height + ')')
-    .call(xAxis);
-
-  svg.append('g')
-    .attr('class', 'y axis')
-    .call(yAxis)
-    .append('text')
-    .attr('transform', 'rotate(-90)')
-    .attr('y', 6)
-    .attr('dy', '5px')
-    .style('text-anchor', 'end')
-    .text('solved');
-
-  svg.selectAll('.bar')
-    .data(data)
-    .enter().append('rect')
-    .attr('class', 'bar')
-    .attr('x', function (d) { return x(dnt.format(new Date(d.timeStamp), 'MM/DD')); })
-    .attr('width', x.rangeBand())
-    .attr('y', function (d) { return y(d.Solved); })
-    .attr('height', function (d) { return height - y(d.Solved); });
-
-  $('#modal-graphics').openModal();
-}
-*/
 
 function displayData (err, data) {
   var urlProfile = 'https://www.urionlinejudge.com.br/judge/en/profile/';
@@ -195,14 +128,14 @@ function displayData (err, data) {
           break;
         }
       }
-      //d3fy(personToGraph, mmax);
+
       c3G(personToGraph);
     });
     cur.appendChild(divName);
     cur.appendChild(divInfo);
     tar.appendChild(cur);
   }
-  //c3G();
+
 }
 
 function start () {
