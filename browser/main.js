@@ -5,7 +5,7 @@ var c3 = require('c3');
 
 function c3G(data) {
 
-  var height = 300;
+  var height = 400;
   var width = 700;
   if (screen.height <= 400) {
     height = 220;
@@ -29,7 +29,7 @@ function c3G(data) {
       delta.push(problems[i + 1] - problems[i]);
     dates.push(dnt.format(new Date(data.data[i].timeStamp), 'MM-DD'));
   }
-  console.log(dates);
+
   var chart = c3.generate({
     bindto: '#graphics',
     data: {
@@ -41,7 +41,10 @@ function c3G(data) {
         problems,
         delta
       ],
-      type: 'spline'
+      type: 'spline',
+      axes: {
+        delta: 'y2'
+      }
     },
 
     axis : {
@@ -49,6 +52,20 @@ function c3G(data) {
         type : 'timeseries',
         tick: {
           format: '%m-%d'
+        }
+      },
+      y: {
+        label: {
+          text: 'Solved problems',
+          position: 'outer-middle'
+        }
+      },
+      y2: {
+        show: true,
+        label: {
+          text: 'Problems by week',
+          position: 'outer-middle'
+          
         }
       }
     }
