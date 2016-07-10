@@ -22,7 +22,7 @@ function c3G(data) {
   problems = ["name"];
   delta = ["delta", 0];
   dates = ["date"];
-  
+
   for(var i = 0; i < data.data.length; i++) {
     if(data.data[i].name != null) problems[0] = data.data[i].name;
     problems.push(parseInt(data.data[i].Solved));
@@ -36,7 +36,7 @@ function c3G(data) {
     data: {
       x: 'date',
       xFormat: '%m-%d',
-      
+
       columns: [
         dates,
         problems,
@@ -66,7 +66,7 @@ function c3G(data) {
         label: {
           text: 'Problems by week',
           position: 'outer-middle'
-          
+
         }
       }
     }
@@ -126,14 +126,14 @@ function displayData (err, data) {
     var cur = document.createElement('div');
     var divInfo = document.createElement('div');
     var divName = document.createElement('div');
-    
+
     cur.id = nicks[i].id;
-    cur.className = 'floating-box';
+    cur.className = 'col floating-box';
     divName.innerHTML = '<a href="' + urlProfile + nicks[i].id + '" target=_blank>' +nicks[i].name + '</a><br />';
     divInfo.innerHTML = 'Problems Solved: ' + ' <span>[' + nicks[i].solved + ']<span><br />';
     divInfo.innerHTML += 'Last Week: ' + ' <span>[' + nicks[i].st + ']<span>';
 
-    
+
     divInfo.addEventListener('click', function (event) {
       var idPerson = event.target.id;
       if (!idPerson) {
